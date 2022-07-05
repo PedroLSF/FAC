@@ -13,4 +13,5 @@ Ciclos de busca e execução:
 
 Instruções, assim como registradores e words de dados, também têm 32 bits de comprimento.
 
-<img src="/Image/Formato de Instruções.png" alt="">
+![image](\\wsl$\Ubuntu-20.04\home\pedrolucas0\FAC\Image\Formato de Instruções.png)
+
