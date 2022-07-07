@@ -110,3 +110,7 @@ MIPS: Existem os equivalentes paraANDeORcom Imediatos (ori e andi).
 Formato de instrução Tipo-J: Ex.: j 1200
 
 ![image](/Image/Controle%20de%20Fluxo.png)
+
+Desvio Condicional:
+
+        bne $t0, $t1, Label     # Branch if Not Equal: $t0 != $t1       ?       PC=Label
