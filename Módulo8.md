@@ -19,10 +19,23 @@ Registradores MIPS:
 
 ![image](/Image/Instru%C3%A7%C3%B5es%20de%20suporte%20a%20procedimentos.png)
 
+### Instruções de suporte a procedimentos: jal (jump and link)
 Link, neste caso, quer dizer é armazenado, no registrador $ra, o endereço da instrução que vem logo após a instrução jal Label:
 
     Código equivalente:
 
     addi $ra, $PC, 4
     j Label
+
+Por que Existe a instrução jal?
+
+### Instruções de suporte a procedimentos
+
+![image](/Image/Exemplo%20formato%20de%20instru%C3%A7%C3%B5es.png)
+
+### Usando mais registradores
+**Q**
+
+
+
 
