@@ -83,5 +83,7 @@ sll e srl (deslocamentos lógicos ou logical shifts)
 * Instrução do Tipo-R.
 * Utiliza o campo shamt (shift amount)
         
-        Quantidade de Deslocamento (de acordo com a direção!)            Exemplo:
+        Quantidade de Deslocamento (de acordo com a direção!)   
+        
+        Exemplo:
         sll $t2, $s0, 4 # $t2 = $s0 << 4 bits    
