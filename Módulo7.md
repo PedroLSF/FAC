@@ -104,5 +104,6 @@ MIPS: Existem os equivalentes paraANDeORcom Imediatos (ori e andi).
 * Instruções MIPS
 
         jr   $t0       # Jump  Register:   PC=[$t0]                Obs.: Tipo
-        -R !j Label       # Jump  Label: PC=Label
+        -R 
+        !j Label       # Jump  Label: PC=Label
         jal  Label     # Jump  and  Link: $ra=PC+4; PC=Label
