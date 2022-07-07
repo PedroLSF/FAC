@@ -139,4 +139,100 @@ Exemplo:
 
         Construa a pseudo-instrução Branch If Less Than: blt $t0,$t1,Label 
         slt $at, $t0, $t1
-        bne $at, $zero, Label    
+        bne $at, $zero, Label
+
+### Constantes
+
+Constantes pequenas são usadas muito frequentemente (50% dos operandos).
+
+        A = A + 5;
+        B = B + 1;
+        C = C - 18;
+
+Como tratar constantes no MIPS?
+* Coloque constantes típicas na memória e carregue-as.
+* Crie registradores hardwired (como $zero) para constantes como um (1).
+
+Instruções com imediato MIPS:
+
+add $29, $29, 4
+slti $8, $18, 10
+andi $29, $29, 6
+ori $29, $29, 4;
+
+### Princípio de Projeto
+
+Agilizar o caso mais comum!
+
+### Constantes (maiores)
+
+Para carregar uma constante de 32 bits num registrador são necessárias duas instruções. Nova instrução: load upper immediate
+
+![image](/Image/Const.%20Maiores.png)
+
+Carga dos bits menos significativos...
+
+![image](/Image/Ori.png)
+
+### Linguagem Assembly vs. Linguagem de Máquina
+
+O assembly fornece uma representação simbólica conveniente
+* muito mais fácil do que escrever números binários;
+* por exemplo, destino primeiro;
+* Pode-se usar Labels em vez de endereços numéricos;
+A linguagem de máquina é realidade subjacente
+* Por exemplo, o destino não é mais o primeiro;
+* Labels são convertidos em números apropriados;
+O assembly pode fornecer "pseudo-instruções"
+* por exemplo, move $t0, $t1 existe apenas no assembly;
+* pode ser implementada usando add $t0, $t1, $zero
+Ao considerar o desempenho, você deve contar as instruções reais
+
+### Resumo
+Instruções simples, todas de 32 bits
+
+Bastante estruturada
+
+Somente três formatos de instruções
+
+![image](/Image/Resumo%20Mod%207.png)
+
+Contar com o compilador para obter desempenho
+
+Auxiliar o compilador onde for possível
+
+### Endereços (do Contador de Programa PC) em desvios
+
+Instruções
+
+        bne $t4, $t5, Label     # Próxima instrução em Label se $t4 != $t5
+        beq $t4, $t5, Label     # Próxima instrução em Label se $t4 == $t5
+        j Label # Próxima instrução em Label
+        jal Label # $ra=PC+4; Próxima Instrução em Label 
+
+Formatos
+
+![image](/Image/Formatos.png)
+
+### Linguagem Assembly vs. Linguagem de Máquina
+
+Pode-se especificar um registrador (como lw e sw) e adicioná-lo ao endereço (Endereço Relativo)
+* Utilizar Instruction Address Register (PC = program counter);
+* Maioria dos descios são locais (Princípio da Localidade);
+Instruções tipo-J, j e jal, utilizam os 4bits de alta ordem do PC e concatenam ao endereço do (Label (26)<<2)(28) totalizando os 32 bits:
+* limites de endereço de 256 MB (64M instruções).
+* O montador e o linker precisam cuidar diso!
+
+### Endereços (do Contador de Programa PC) em desvios
+
+![image](/Image/End%20em%20desvios.png)
+
+Exemplo: 
+        
+        while(save[i]==k) i++;
+
+* MIPS: Possuem endereços em bytes, diferenciando em 4 bytes (word);
+* A instrução bne acrescenta 2 words (8 bytes) na instrução seguinte, especificando o endereço de descio (8 + 80016) e não em relação à instrução atual (12 + 80012), ou ao endereço completo/absoluto (80024).
+* O jump utiliza o endereço completo (2000 x 4 = 80000)
+![image](/Image/End%20em%20desvios%20Ex.png)
+
