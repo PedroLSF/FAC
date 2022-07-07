@@ -106,3 +106,7 @@ MIPS: Existem os equivalentes paraANDeORcom Imediatos (ori e andi).
         jr   $t0       # Jump  Register:   PC=[$t0]             Obs.: Tipo-R!
         j Label       # Jump  Label: PC=Label
         jal  Label     # Jump  and  Link: $ra=PC+4; PC=Label
+
+Formato de instrução Tipo-J: Ex.: j 1200
+
+![image](/Image/Controle%20de%20Fluxo.png)
