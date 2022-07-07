@@ -114,3 +114,29 @@ Formato de instrução Tipo-J: Ex.: j 1200
 Desvio Condicional:
 
         bne $t0, $t1, Label     # Branch if Not Equal: $t0 != $t1       ?       PC=Label
+        beq $t0, $t1, Label     # Branch if Equal: $t0 == $t1   ?       PC=Label
+
+![image](/Image/Comp%20C%20e%20Assembly.png)
+
+### Comparações
+
+No MIPS, são implementadas as comparações:
+
+        == e != 
+        
+Como implementar:
+
+        <,>,<=,>=?
+        
+Instrução MIPS: Set on Less Than
+
+        * slt $t0,$t1,$t2        # $t0=1 se $t1<$t2;    $t0=0 caso contrário;
+        * slti $t0,$t1,Imm     # $t0=1  se $t1<Imm; $t0=0 caso contrário;
+        * Apenas com estas instruções podemos montar várias estruturas de controle;
+        * Ao montador, é reservado o registrador $1 ($at) para essa tarefa.
+
+Exemplo:
+
+   Construa a pseudo-instrução Branch If Less Than: blt $t0,$t1,Label 
+   slt $at, $t0, $t1
+   bne $at, $zero, Label    
