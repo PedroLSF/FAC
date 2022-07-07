@@ -23,7 +23,9 @@ Campos (fields):
 * shamt: shift amount;
 * funct: variação da operação: function code.
 
-Exemplo: add $t0, $s1, $s2
+Exemplo: 
+
+    add $t0, $s1, $s2
 
 * registradores são identificados por seus números(vide tabelas): $t0=8, $s1=17, $s2=18
 
@@ -52,14 +54,34 @@ Compilação manual...
 
 * Suponha que $t1 tenha o endereço base de A e que $s2 corresponda a h, traduza a seguinte linha em C para código de máquina MIPS:
 
-    A[300] = h + A[300];
+        A[300] = h + A[300];
 
 * Primeiro, temos que o código em assembly correspondente é:
 
-    lw $t0 ,1200( $t1) # $t0 = A[300]
-    add $t0 , $s2 , $t0 # $t0 = h + A[300]
-    sw $t0 , 1200( $t1) # A[300] = h + A[300]
+        lw $t0 ,1200( $t1) # $t0 = A[300]
+        add $t0 , $s2 , $t0 # $t0 = h + A[300]
+        sw $t0 , 1200( $t1) # A[300] = h + A[300]
 
 * Qual o código em linguagem de máquina destas 3 instruções?
 
-Slide 9 - 10
+![image](/Image/Corre%C3%A7%C3%A3o%20manual....png)
+
+### Operações Lógicas
+
+![iamge](/Image/Operadores.png)
+
+NOT:
+* Realizado utilizando o NOR.
+* Utiliza-se o $zero (Hardwired) de preferência!
+* Expressão Booleana:
+
+                A NOR B = NOT (A OR B).
+
+* Se B = 0:NOT (A OR 0) = NOT(A).
+
+sll e srl (deslocamentos lógicos ou logical shifts)
+* Instrução do Tipo-R.
+* Utiliza o campo shamt (shift amount)
+*              Quantidade de Deslocamento (de acordo com a direção!)
+*               Exemplo:
+                sll $t2, $s0, 4 # $t2 = $s0 << 4 bits    
