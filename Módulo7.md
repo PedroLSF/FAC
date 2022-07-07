@@ -130,10 +130,10 @@ Como implementar:
         
 Instrução MIPS: Set on Less Than
 
-        * slt $t0,$t1,$t2        # $t0=1 se $t1<$t2;    $t0=0 caso contrário;
-        * slti $t0,$t1,Imm     # $t0=1  se $t1<Imm; $t0=0 caso contrário;
-        * Apenas com estas instruções podemos montar várias estruturas de controle;
-        * Ao montador, é reservado o registrador $1 ($at) para essa tarefa.
+         slt $t0,$t1,$t2        # $t0=1 se $t1<$t2;    $t0=0 caso contrário;
+         slti $t0,$t1,Imm     # $t0=1  se $t1<Imm; $t0=0 caso contrário;
+         Apenas com estas instruções podemos montar várias estruturas de controle;
+         Ao montador, é reservado o registrador $1 ($at) para essa tarefa.
 
 Exemplo:
 
