@@ -86,4 +86,16 @@ sll e srl (deslocamentos lógicos ou logical shifts)
         Quantidade de Deslocamento (de acordo com a direção!)   
         
         Exemplo:
-        sll $t2, $s0, 4 # $t2 = $s0 << 4 bits    
+        sll $t2, $s0, 4 # $t2 = $s0 << 4 bits
+
+![image](/Image/OP%20L%C3%B3gco%20SLL.png)
+
+AND e OR:
+* Mesma atribuição do AND e OR booleanos
+* Realizados Bit-abit
+
+        AND: Operação de "mascaramento" (ocultar bits) e "chave lógica".
+        OR: "Junção de sinais lógicos"
+
+MIPS: Existem os equivalentes paraANDeORcom Imediatos (orieandi).
+
