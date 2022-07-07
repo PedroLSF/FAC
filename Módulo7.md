@@ -97,5 +97,12 @@ AND e OR:
         AND: Operação de "mascaramento" (ocultar bits) e "chave lógica".
         OR: "Junção de sinais lógicos"
 
-MIPS: Existem os equivalentes paraANDeORcom Imediatos (orieandi).
+MIPS: Existem os equivalentes paraANDeORcom Imediatos (ori e andi).
 
+### Controle de Fluxo
+* Registrador Especial de PC (Program Counter): indica qual o endereço da próxima instrução a ser buscada na memória
+* Instruções MIPS
+
+        jr   $t0       # Jump  Register:   PC=[$t0]                Obs.: Tipo
+        -R !j Label       # Jump  Label: PC=Label
+        jal  Label     # Jump  and  Link: $ra=PC+4; PC=Label
