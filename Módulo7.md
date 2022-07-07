@@ -39,3 +39,27 @@ lw $t0, Imm($t1)
 
 ![image](/Image/Formato%20de%20Instru%C3%A7%C3%B5es%20compromisso.png)
 
+Novo tipo de formato de instrução para instruções com dados Imediatos.
+* Exemplo:lw $t0, 32($s3)
+
+O comprimento do quarto campo do Tipo-I ́e a soma dos comprimentos dos ́ultimos três campos do Tipo-R.
+
+Formato de Instrução Tipo-I
+
+![image](/Image/Formato%20de%20Instru%C3%A7%C3%A3o%20Tipo-I.png)
+
+Compilação manual...
+
+* Suponha que $t1 tenha o endereço base de A e que $s2 corresponda a h, traduza a seguinte linha em C para código de máquina MIPS:
+
+    A[300] = h + A[300];
+
+* Primeiro, temos que o código em assembly correspondente é:
+
+    lw $t0 ,1200( $t1) # $t0 = A[300]
+    add $t0 , $s2 , $t0 # $t0 = h + A[300]
+    sw $t0 , 1200( $t1) # A[300] = h + A[300]
+
+* Qual o código em linguagem de máquina destas 3 instruções?
+
+Slide 9 - 10
