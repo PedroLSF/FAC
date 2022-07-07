@@ -137,6 +137,6 @@ Instrução MIPS: Set on Less Than
 
 Exemplo:
 
-   Construa a pseudo-instrução Branch If Less Than: blt $t0,$t1,Label 
-   slt $at, $t0, $t1
-   bne $at, $zero, Label    
+        Construa a pseudo-instrução Branch If Less Than: blt $t0,$t1,Label 
+        slt $at, $t0, $t1
+        bne $at, $zero, Label    
