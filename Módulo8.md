@@ -34,7 +34,13 @@ Por que Existe a instrução jal?
 ![image](/Image/Exemplo%20formato%20de%20instru%C3%A7%C3%B5es.png)
 
 ### Usando mais registradores
-**Q**
+**Q:** Se precisar mais de 4 argumentos e 2 valores de retorno?.
+**Q:** Se o procedimento necessitar utilizar registradores salvos $sx?
+**A:** Processo conhecido por *register spilling:*
+* Uso de uma pilha;
+* Temos um apontador para o topo da pilha;
+* Este apontador é ajustado em uma palavra para cada registrador que é colocado na pilha (push), ou retirado da pilha (pop).
+* Em MIPS, o registrador $29 é utilizado somente para indicar o topo da pilha: $sp (stack pointer).
 
 
 
