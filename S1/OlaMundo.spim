@@ -1,0 +1,7 @@
+.data
+    msg: .asciiz "Ola Mundo\n" #adicionando a mensagem em msm"
+.text
+main:
+    la $a0, msg #String em $a0
+    li $v0, 4 #Imprimir String
+    syscall #Salvar

@@ -1,0 +1,22 @@
+.data
+    msg: .asciiz "\n" #adicionando a mensagem em msg"
+.text
+main:
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    add $t0, $v0, $zero #Atribuindo o valor de $t0 em $t0
+    
+    li $v0, 5 #Lendo um segundo inteiro
+    syscall #Salvar
+    add $t1, $v0, $zero #Atribui o $t1 em $t1
+    
+    add $t2, $t1, $t0 #t2 = t1 + t0
+    
+    li $v0, 1 #Imprimir um inteiro
+    add $a0, $t2, $zero #Colocando o valor da soma em $a0
+    syscall#Salvar
+    la $a0, msg  #String em $a0
+    li $v0, 4 #Imprimir String
+    syscall #Salvar
+    li $v0, 10 #Matar a execução
+    syscall #Salvar
