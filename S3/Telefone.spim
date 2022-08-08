@@ -1,0 +1,19 @@
+.data
+
+    ABC: .asciiz "ADD: "
+    DEF: .asciiz "SUB: "
+    GHI: .asciiz "AND: "
+    JKL: .asciiz "OR: "
+    MNO: .asciiz "XOR: "
+    PQRS: .asciiz "MASK: "
+    TUV: .asciiz "SLL("
+    WXYZ: .asciiz "SRL("
+    linha: .asciiz "\n"
+
+.text
+
+main:
+
+    jal Loop
+
+Loop:
