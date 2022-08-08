@@ -12,7 +12,6 @@ main:
     syscall #Salvar
     add $t0, $v0, $zero # Ler N
     add $t1, $zero, 1 #J = 0 + 1
-    beq 
 
 impar:
 
