@@ -1,0 +1,99 @@
+.data
+
+    espaco: .asciiz " "
+    linha: .asciiz "\n"
+    THUMS: .asciiz "THUMS"
+
+.text
+
+main:
+
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    add $t0, $v0, $zero # Ler N
+    add $t1, $zero, 1 #J = 0 + 1
+    beq 
+
+impar:
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    add $t1, t1, 1
+    bgt $t1, $t0, exit #if(j > n) exit
+
+par:
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, THUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, espaco #coloca o texto em $a0
+    syscall #Salvar
+
+    add $t1, t1, 1
+    
+    bgt $t1, $t0, exit #if(j > n) exit
+
+exit: #encerra
+
+    li $v0, 10
+    syscall
