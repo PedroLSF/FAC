@@ -10,16 +10,18 @@ main:
 
     li $v0, 5 #Lendo um inteiro
     syscall #Salvar
-    add $t0, $v0, $zero # Ler N
+    move $t0, $v0 # Ler N
     addi $t1, $zero, 1 #J = 0 + 1
-    addi $t3, $zero, 1 #J = 0 + 1
-    and $t2, $t0, $t1
+    addi $t3, $zero, 1
+    and $t2, $t0, $t3
 
 Loop:
-    bgt $t2, $zero, impar
-    blt $t2, $t3, par
-    bgt $t1, $t0, exit #if(j > n) exit
-    j Loop
+
+    beq $t1, $t0, exit #if(j = n) exit
+    addi $t1, $t1, 1 #Incrementa
+    and $t2, $t1, $t0 
+    beq $t2, $zero, par #Resto for 0 = par
+    bgt $t2, $zero, impar #resto maior que 0 = impar
 
 impar:
 
@@ -48,6 +50,7 @@ impar:
     syscall #Salvar
 
     addi $t1, $t1, 1 #J = J + 1
+    j Loop
 
 par:
 
@@ -104,6 +107,7 @@ par:
     syscall #Salvar
     
     addi $t1, $t1, 1 #J = J + 1
+    j Loop
 
 exit: #encerra
 

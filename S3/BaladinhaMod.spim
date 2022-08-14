@@ -1,0 +1,48 @@
+.data
+    linha: .asciiz "\n"
+    parTHUMS: .asciiz "THUMS THUMS THUMS THUMS THUMS THUMS"
+    imparTHUMS: .asciiz "THUMS THUMS THUMS"
+
+.text
+main:
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    move $t0, $v0 #Ler N
+    addi $t1, $zero, 0
+
+loop:
+    beq $t1, $t0, exit #if(j = n) exit
+    addi $t1, $t1, 1 #Incrementa
+    div $t2, $t1, 2 #N/2 e pega o resto  
+    mfhi $s4 #Parte mais significativa para o $s4
+    beq $s4, $zero, valorpar #Resto for 0 = par
+    bgt $s4, $zero, valorimpar #resto maior que 0 = impar
+
+valorpar:
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, parTHUMS #coloca o texto em $a0
+    syscall #Salva
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, linha #coloca o texto em $a0
+    syscall #Salva
+
+    j loop #Volta pro loop
+
+valorimpar:
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, imparTHUMS #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, linha #coloca o texto em $a0
+    syscall #Salvar
+
+    j loop #Volta pro loop
+
+exit: #encerra
+    li $v0, 10
+    syscall
+
