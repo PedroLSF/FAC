@@ -1,18 +1,61 @@
 .data
-    linha: .asciiz "\n"
     entrada: .asciiz "Entrada invalida."
+    imprimirNao: .asciiz "nao"
+    imprimirSim: .asciiz "sim"
 
 .text
 main:
     li $v0, 5 #Lendo um inteiro
     syscall #Salvar
-    add $s0, $v0, $zero #Atribuindo o valor de $v0 em $s0
+    move $s0, $v0 #Atribuindo o valor de $v0 em $s0
 
-    #Os valores iniciais precisam ser testados
-    addi $t2, $zero, 1
-    blt $s0, $t2, invalido
+    # Verifica se é < 1
+    addi $s1, $zero, 1
+    blt $s0, $s1, invalido
+
+    #Os valores iniciais precisam ser testados (1,2,3)
+    addi $t0, $zero, 1
+    beq $s0, $t0, pnao
+    slti $t0, $s0, 4
+    bne $t0, $zero, psim
+
+    #Calcular até a raiz quadrada pra saber se é primo
+    mtc1 $s0, $f1 #move o $s0 para $f1 no coprocessador
+	cvt.s.w $f1, $f1 #converte o #f1 de single precision para word
+	sqrt.s $f0, $f1 #calcula a sqrt
+	cvt.w.s $f0, $f0 #Volta a conversão
+	mfc1 $s2, $f0 #Pega o valor de #f0 do coprocessador e poem em $1
+    addi $t4, $zero, 2 #$t4 = 2
+
+divisoes:
+    bgt $t4, $s2, psim #Ele tem que ir dividindo $t0 até $t0 chegar em $s1
+    div $s0, $t4 #divide o número por $t4
+    mfhi $t3 #move pro t3 o valor do high que é o inteiro
+    beq $t3, $zero, pnao #se $t1 for zero então não é primo
+    addi $t4, $t4, 1 #aumenta o $t4 em 1
+    j divisoes
 
 invalido:
-    la $a0, entrada #String em $a0
     li $v0, 4 #Imprimir String
+    la $a0, entrada #String em $a0
     syscall #Salvar
+    j exit
+
+pnao:
+    li $v0, 4 #Imprimir String
+    la $a0, imprimirNao #String em $a0
+    syscall #Salvar
+    j exit
+
+psim:
+    li $v0, 4 #Imprimir String
+    la $a0, imprimirSim #String em $a0
+    syscall #Salvar
+    j exit
+
+exit:
+    li $v0, 10
+    syscall
+
+
+    
