@@ -1,19 +1,124 @@
 .data
-
-    ABC: .asciiz "ADD: "
-    DEF: .asciiz "SUB: "
-    GHI: .asciiz "AND: "
-    JKL: .asciiz "OR: "
-    MNO: .asciiz "XOR: "
-    PQRS: .asciiz "MASK: "
-    TUV: .asciiz "SLL("
-    WXYZ: .asciiz "SRL("
-    linha: .asciiz "\n"
+	memoria: .space 20
+	barraN: .asciiz "\n"
 
 .text
-
 main:
+addi $t0, $zero, 0
 
-    jal Loop
+pilha:
+    li $v0, 8 
+	la $a0, memoria
+	syscall 
 
-Loop:
+    lbu $t1, memoria($0)
+    beq $t1, 10, pilha
+
+loop:
+    lbu $t1, memoria($t0)
+    beq $t1, 10, encerrar	  
+    beq $t1, 65, Num2 	
+	beq $t1, 66, Num2	
+	beq $t1, 67, Num2	
+	beq $t1, 68, Num3 	
+	beq $t1, 69, Num3 	
+	beq $t1, 70, Num3 	
+	beq $t1, 71, Num4 	
+	beq $t1, 72, Num4	
+	beq $t1, 73, Num4	
+	beq $t1, 74, Num5	
+	beq $t1, 75, Num5	
+	beq $t1, 76, Num5	
+	beq $t1, 77, Num6	
+	beq $t1, 78, Num6	
+	beq $t1, 79, Num6	
+	beq $t1, 80, Num7	
+	beq $t1, 81, Num7	
+	beq $t1, 82, Num7	
+	beq $t1, 83, Num7	
+	beq $t1, 84, Num8	
+	beq $t1, 85, Num8	
+	beq $t1, 86, Num8	
+	beq $t1, 87, Num9	
+	beq $t1, 88, Num9	
+	beq $t1, 89, Num9	
+	beq $t1, 90, Num9	
+
+    li $s0, 'A'
+    slt $s1, $t1, $s0
+    bne $s1, 0, loop2
+    addi $t0, $t0, 1 
+    j loop
+
+loop2:
+    li $v0, 11
+    lbu $a0, memoria($t0)
+    syscall
+
+    addi $t0, $t0, 1  
+    j loop
+
+Num2:
+	li $v0,1
+	li $a0,2
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num3:
+	li $v0,1
+	li $a0,3
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num4:
+	li $v0,1
+	li $a0,4
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num5:
+	li $v0,1
+	li $a0,5
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num6:
+	li $v0,1
+	li $a0,6
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num7:
+	li $v0,1
+	li $a0,7
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num8:
+	li $v0,1
+	li $a0,8
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+Num9:
+	li $v0,1
+	li $a0,9
+	syscall
+    addi $t0, $t0, 1
+    j loop
+
+encerrar:
+
+    la $a0, barraN
+	li $v0, 4
+	syscall
+	
+	li $v0, 10
+	syscall

@@ -1,0 +1,18 @@
+.data
+    linha: .asciiz "\n"
+    entrada: .asciiz "Entrada invalida."
+
+.text
+main:
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    add $s0, $v0, $zero #Atribuindo o valor de $v0 em $s0
+
+    #Os valores iniciais precisam ser testados
+    addi $t2, $zero, 1
+    blt $s0, $t2, invalido
+
+invalido:
+    la $a0, entrada #String em $a0
+    li $v0, 4 #Imprimir String
+    syscall #Salvar
