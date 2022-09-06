@@ -1,0 +1,153 @@
+.data
+    invalido: .asciiz "Entradas invalidas.\n"
+    entrada: .asciiz "O modulo nao eh primo.\n"
+    parte1: .asciiz "A exponencial modular "
+    parte2: .asciiz " elevado a "
+    parte3: .asciiz " (mod "
+    parte4: .asciiz ") "
+    parte5: .asciiz "eh "
+    parte6: .asciiz ".\n"
+
+.text
+main:
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    add $t0, $v0, $zero # Ler N_1
+    add $s4, $zero, $t0
+
+
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    add $t1, $v0, $zero # Ler N_2
+    add $s5, $zero, $t1
+
+    li $v0, 5 #Lendo um inteiro
+    syscall #Salvar
+    add $t2, $v0, $zero # Ler N_3
+    add $s6, $zero, $t2
+
+    bgt $t0, 65535, imprimirInvalido # if($t0 > 65535) = imprimirInvalido
+    bgt $t1, 65535, imprimirInvalido # if($t1 > 65535) = imprimirInvalido
+    bgt $t2, 65535, imprimirInvalido # if($t2 > 65535) = imprimirInvalido
+
+    # Verificar se são positivos
+    blt $t0, 1, imprimirInvalido # if($t0 > 0) = imprimirInvalido
+    blt $t1, 1, imprimirInvalido # if($t1 > 0) = imprimirInvalido
+    blt $t2, 1, imprimirInvalido # if($t2 > 0) = imprimirInvalido
+
+    # Set dos valores que serâo usados na execucao
+    addi $t6, $zero, 1 # result = 1
+    #divu $t0, $t2 # x = x % p
+    #mfhi $t0 # pega o resto e coloca em x
+
+    # Verificar se x é 0
+    # beq $t0, $zero, imprimirInvalido # if($t0 == 0) = imprimirInvalido
+
+    # Verificar se N_3 é primo para valores de 1 ate 3
+
+    addi $t3, $zero, 1 #$t3 = 1
+    beq $t2, $t3, imprimirExit # Ver se $t2 é igual a 1
+    slti $t3, $t2, 4 # Faz a verificacao para 2 e 3
+    bne $t3, $zero, execucao # Caso seja 2 ou 3 ir para execucao
+    
+    # Verificar se N_3 é primo para o restante dos números
+    
+    # Calcular até a raiz quadrada pra saber se é primo
+    mtc1 $t2, $f1 #move o $t2 para $f1 no coprocessador
+	cvt.s.w $f1, $f1 #converte o #f1 de single precision para word
+	sqrt.s $f0, $f1 #calcula a sqrt
+	cvt.w.s $f0, $f0 #Volta a conversão
+	mfc1 $s2, $f0 #Pega o valor de #f0 do coprocessador e poem em $s2
+    addi $t4, $zero, 2 #$t4 = 2
+
+divisoes:
+    bgt $t4, $s2, execucao  #Ele tem que ir dividindo $t4 até $t4 chegar em $s2
+    divu $t2, $t4 #divide o número por $t4
+    mfhi $t5 #move pro $t5 o valor do high que é o resto
+    beq $t5, $zero, imprimirExit #se $t5 for zero então não é primo
+    addi $t4, $t4, 1 #aumenta o $t4 em 1
+    j divisoes
+    
+execucao:
+    blt $t1, 1, final # Se y for menor que 1 vai para o print e encerra
+    and $t7, $t1, 1 # (y & 1)
+    bgt $t7, $zero, operacao # If((y & 1) > 0) = operacao
+    j execucao2
+
+operacao:
+    multu $t6, $t0 # (result * x)
+    mflo $t6 # Move do low o resultado da multiplicação (result = result * x)
+    divu $t6, $t2 # (result * x)/p
+    mfhi $t6 # Pega o resto e coloca no result (result = (result * x) % p)
+
+execucao2:
+    srl $t1, $t1, 1 #Shift para a direita 1 vez
+    multu $t0, $t0 # x*x
+    mflo $t0 # x = x*x
+    divu $t0, $t2 # (x*x)/p
+    mfhi $t0 # x = (x*x)%p
+    j execucao
+
+final:
+    li $v0, 4 #Imprimir uma string
+    la $a0, parte1 #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 1 #Imprimir o inteiro em $v0
+    move $a0, $s4 #Colocar o inteiro em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, parte2 #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 1 #Imprimir o inteiro em $v0
+    move $a0, $s5 #Colocar o inteiro em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, parte3 #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 1 #Imprimir o inteiro em $v0
+    move $a0, $s6 #Colocar o inteiro em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, parte4 #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, parte5 #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 1 #Imprimir o inteiro em $v0
+    move $a0, $t6 #Colocar o inteiro em $a0
+    syscall #Salvar
+
+    li $v0, 4 #Imprimir uma string
+    la $a0, parte6 #coloca o texto em $a0
+    syscall #Salvar
+
+    li $v0, 10
+    syscall
+
+imprimirInvalido: #Imprime e encerra
+    li $v0, 4 #Imprimir String
+    la $a0, invalido #String em $a0
+    syscall #Salvar
+    li $v0, 10
+    syscall
+
+
+imprimirExit: #Imprime e encerra
+    li $v0, 4 #Imprimir String
+    la $a0, entrada #String em $a0
+    syscall #Salvar
+    li $v0, 10
+    syscall
+
+exit: #encerra
+
+    li $v0, 10
+    syscall
