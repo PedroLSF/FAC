@@ -37,11 +37,6 @@ main:
 
     # Set dos valores que serâo usados na execucao
     addi $t6, $zero, 1 # result = 1
-    #divu $t0, $t2 # x = x % p
-    #mfhi $t0 # pega o resto e coloca em x
-
-    # Verificar se x é 0
-    # beq $t0, $zero, imprimirInvalido # if($t0 == 0) = imprimirInvalido
 
     # Verificar se N_3 é primo para valores de 1 ate 3
 
