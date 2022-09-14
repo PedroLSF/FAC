@@ -11,7 +11,7 @@ pilha:
 	la $a0, memoria
 	syscall 
 
-    lbu $t1, memoria($0)
+    lbu $t1, memoria($t0)
     beq $t1, 10, pilha
 
 loop:
