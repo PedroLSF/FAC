@@ -1,0 +1,62 @@
+.data
+	memoria: 
+		.align 0 # Escrever tudo em Byte
+		.space 33 #Vetor de 33 (32 + \n)
+	end: .byte '\n'
+	imprimir: .space 2
+.text
+
+main:
+	# Criar a String
+
+	li $v0, 8 # Escrever String
+	la $a0, memoria #Escrever no Array
+	la $a1, 33  # Receber os caracteres solicitados + o \n
+	syscall
+	
+	move $t0, $zero #Contador
+	lb $t1, end
+	addi $s3, $zero, 1 
+
+loop:
+
+	# Condição de parada
+	lb $t2, memoria($t0) # Colocando o valor de $t0 na memoria em $t2
+	beq $t2, $zero, exit #Se for 0 sai
+	beq $t2, $t1, exit #Se achar \n sai
+
+	#Pega os 4 MSB
+	srl $s4, $t2, 4 
+	jal TransformaHexa # Pula pro TransformaHexa e deixa o contador aqui
+	sb $s5, imprimir($zero)
+
+	#Pegando os 4 LSB
+	andi $s4, $t2, 0xF # Mascara para pegar o LSB
+	jal TransformaHexa
+	sb $s5, imprimir($s3) #Salva o byte em imprimir
+
+	# Imprimir a conversão
+	li $v0, 4 #Imprimir String
+	la $a0, imprimir #Coloca o valor de imprimir em $a0
+	syscall
+
+	addi $t0, $t0, 1
+	j loop
+
+TransformaHexa:
+	
+	# Verificar se é maior que 9
+	bgt $s4, 9, OperaHexa # Se for maior que 9 tem que somar um valor para bater com o valor da tabela ASCII
+	addi $s5, $s4, 48 #Se for menor que 9 só somar para imprimir o valor certo da tabela ASCII
+
+	jr $ra
+
+OperaHexa:
+
+	addi $s5, $s4, 87
+	jr $ra
+
+exit: #encerra
+
+    li $v0, 10
+    syscall

@@ -1,0 +1,148 @@
+.data
+	stringEntrada: .space 128
+	base64: .asciiz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	simbolI: .asciiz "=" 
+	simbolEndLine: .asciiz "\n"
+.text
+main:
+
+	la $s0, base64
+
+	li $v0, 8         
+	la $a0, stringEntrada  
+	li $a1, 128     
+	syscall
+
+	la $t0, stringEntrada    
+	lb $t2, 0($t0)           
+	
+	move $t3,$t0
+
+	addi $t5,$t5,0
+	addi $t6,$t6,1
+	addi $t4,$t4,3
+	addi $s7,$s7,0
+	addi $a3,$a3,1
+	la $s6,simbolEndLine
+	lb $s6, 0($s6)
+
+conta_tamanho:
+	
+	lb $t9, 0($t3)
+	addi $t3,$t3,1
+	addi $s7,$s7,1
+	beq $s6,$t9,voltaNormal
+	addi $t5,$t5,1
+	beq $t5,$t4,encode_64
+	j conta_tamanho
+
+voltaNormal:
+	sub $t3,$t3,$s7
+	
+	move $s7,$zero
+	
+	j encode_64
+
+encode_64:
+	beq $t5,$zero,saida
+	# Parte 1
+	lb $t2,0($t0)         
+	andi $t2,$t2,0xFC
+	srl $a0, $t2, 2   
+    	
+    	add $t1, $a0, $s0
+    	lb $a0, 0($t1)
+    	
+    	li $v0, 11     
+	syscall
+	
+    	move $t2, $zero
+    	
+    	# Parte 2
+    	
+    	lb $t2, 0($t0)         
+    	addi $t0,$t0,1
+    	lb $t7, 0($t0)         
+    	
+    	andi $t2,$t2,0x03
+    	sll $t2,$t2,4
+    	
+    	andi $t7,$t7,0xF0
+    	srl $t7,$t7,4
+
+    	or $a0,$t2,$t7
+    	
+    	add $t1, $a0, $s0
+    	lb $a0, 0($t1)
+    	
+    	li $v0, 11    
+	syscall
+	sub $t0,$t0,$a3
+	move $t2, $zero
+	
+	# Parte 3
+	bgt $t5,$t6,terceiraParte
+	la $a0,simbolI
+	li $v0, 4      
+	syscall
+
+		
+	# Parte 4
+	addi $t6,$t6,1
+	bgt $t5,$t6,quartaParte
+	la $a0,simbolI
+	li $v0, 4    
+	syscall
+
+	j saida
+
+terceiraParte:
+	lb $t7, 1($t0)        
+	lb $t8, 2($t0)        
+	
+	andi $t7,$t7,0x0F
+    	sll $t7,$t7,2
+    	
+    	andi $t8,$t8,0xC0
+    	srl $t8,$t8,6
+
+    	or $a0,$t7,$t8
+    	
+    	add $t1, $a0, $s0
+    	lb $a0, 0($t1)
+    	
+    	li $v0, 11      
+	syscall
+	
+	j quartaParte
+	
+quartaParte:
+	addi $t6,$t6,1
+	ble $t5,$t6,sib
+	
+	lb $t8, 2($t0)         
+	andi $a0,$t8,0x3F
+	
+	add $t1, $a0, $s0
+    	lb $a0, 0($t1)
+    	
+    	li $v0, 11
+	syscall
+	
+	move $t5, $zero
+	
+	sub $t6,$t6,1
+	
+	addi $t0,$t0,3
+	
+	j conta_tamanho
+
+sib:
+	la $a0,simbolI
+	li $v0, 4    
+	syscall
+	j saida
+	
+saida:   
+	li $v0, 10    
+	syscall
